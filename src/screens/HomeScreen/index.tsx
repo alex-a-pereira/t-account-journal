@@ -1,9 +1,13 @@
 import React from 'react'
 
+import { TAccount } from '@components/TAccount/TAccount'
+
+import './HomeScreen.scss'
+
 export const HomeScreen: React.FC = () => {
   return (
-    <div>
-      <h2>Home Screen Here!</h2>
+    <div className="screen-container">
+      <TAccount />
     </div>
   )
 }

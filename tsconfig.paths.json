@@ -5,7 +5,9 @@
       "@screens": ["./src/screens"],
       "@screens/*": ["./src/screens/*"],
       "@setup": ["./src/setup"],
-      "@setup/*": ["./src/setup/*"]
+      "@setup/*": ["./src/setup/*"],
+      "@components": ["./src/components"],
+      "@components/*": ["./src/components/*"]
     }
   }
 }
