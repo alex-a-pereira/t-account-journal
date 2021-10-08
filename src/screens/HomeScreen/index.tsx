@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { GeneralLedger } from '@components/GeneralLedger/GeneralLedger'
 import { TAccount } from '@components/TAccount/TAccount'
 
 import './HomeScreen.scss'
@@ -9,7 +10,7 @@ export const HomeScreen: React.FC = () => {
     <div className="screen-container">
       <h2>General Ledger</h2>
       <div className='general-ledger-section'>
-        <p>general ledger here :)</p>
+        <GeneralLedger />
       </div>
       <hr />
       <h2>T-Accounts</h2>
