@@ -5,7 +5,7 @@
   border-top-right-radius: 24px;
 
   border-color: $border-color;
-  width: 50%;
+  width: 30%;
   overflow: hidden;
 
   .header {
@@ -13,5 +13,29 @@
     background-color: white;
     display: flex;
     justify-content: center;
+  }
+
+  .body {
+    table {
+      width: 100%;
+      .entry {
+        width: 100%;
+
+        &.dark {
+          background-color: $kinda-light-gray;
+        }
+
+        td {
+          &.column {
+            width: 42.5%;
+          }
+
+          &.id {
+            width: 15%;
+          }
+          
+        }
+      }
+    }
   }
 }
