@@ -7,7 +7,9 @@
       "@setup": ["./src/setup"],
       "@setup/*": ["./src/setup/*"],
       "@components": ["./src/components"],
-      "@components/*": ["./src/components/*"]
+      "@components/*": ["./src/components/*"],
+      "@typings": ["./src/setup/typings"],
+      "@typings/*": ["./src/setup/typings/*"]
     }
   }
 }
