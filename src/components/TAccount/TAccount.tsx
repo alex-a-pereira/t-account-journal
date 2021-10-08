@@ -1,18 +1,19 @@
 import React from 'react'
 
 import {
-  EntryType, JournalEntry
+  EntryType,
+  EntryLineItem
 } from '@typings'
 
 import './TAccount.scss'
 
 interface TAccountEntryProps {
   isEven: boolean
-  journalEntry: JournalEntry
+  entryLineItem: EntryLineItem
 }
 
 const TAccountEntry: React.FC<TAccountEntryProps> = (props: TAccountEntryProps) => {
-  const { type, amount, entryNumber } = props.journalEntry
+  const { type, amount, entryNumber } = props.entryLineItem
 
   return (
     <tr className={`entry ${!props.isEven ? 'dark' : ''}`}>
@@ -30,7 +31,7 @@ const getEntryNum = () => {
 
 export const TAccount: React.FC = () => {
   // TODO: obviously stubbed out
-  const entries: JournalEntry[] = [
+  const entryLines: EntryLineItem[] = [
     { type: EntryType.debit, amount: 100, entryNumber: getEntryNum() },
     { type: EntryType.debit, amount: 400, entryNumber: getEntryNum() },
     { type: EntryType.debit, amount: 300, entryNumber: getEntryNum() },
@@ -47,12 +48,12 @@ export const TAccount: React.FC = () => {
       <div className='body'>
         <table>
           {
-            entries.map((entry, idx) => {
+            entryLines.map((entry, idx) => {
               return (
                 <TAccountEntry
                   key={idx}
                   isEven={idx % 2 === 0}
-                  journalEntry={entry}
+                  entryLineItem={entry}
                 />
               )
             })
