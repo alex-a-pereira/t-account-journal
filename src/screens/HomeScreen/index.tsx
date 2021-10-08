@@ -7,7 +7,16 @@ import './HomeScreen.scss'
 export const HomeScreen: React.FC = () => {
   return (
     <div className="screen-container">
-      <TAccount />
+      <div className='t-accounts-section'>
+        <TAccount />
+        <TAccount />
+        <TAccount />
+        <TAccount />
+        <TAccount />
+        <TAccount />
+        <TAccount />
+        <TAccount />
+      </div>
     </div>
   )
 }
