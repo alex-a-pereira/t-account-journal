@@ -5,7 +5,9 @@ import './TAccount.scss'
 export const TAccount: React.FC = () => {
   return (
     <div className="t-account-container">
-      <h2>Account Name</h2>
+      <div className="header">
+        <h3 className="title">Account Name</h3>
+      </div>
     </div>
   )
 }
