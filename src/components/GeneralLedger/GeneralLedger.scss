@@ -1,3 +1,10 @@
 .gen-ledger-table {
-  
+  width: 100%;
+  border: 1px solid $border-color;
+
+  .entry-row {
+    &.dark {
+      background-color: $kinda-light-gray;
+    }
+  }
 }

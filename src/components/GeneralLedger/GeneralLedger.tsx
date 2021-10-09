@@ -8,61 +8,61 @@ import { dataStore } from '@store'
 
 import './GeneralLedger.scss'
 
-/**
- * TODO TODO TODO:
- * we need to be able to support multiple debits and multiple credits per journal entry!!
- */
-
 interface JournalEntryDisplayProps {
   entryNumber: number
   entry: JournalEntry
 }
 
+interface RowDisplayData {
+  entryNumber: number | null
+  debitAccountName: string | null
+  debitAmount: number | null
+  creditAccountName: string | null
+  creditAmount: number | null
+}
+
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalEntryDisplayProps) => {
   const { entry } = props
 
-  /*
-    table
-      tr
-        td debit1, td null
-      tr
-        td debit2, td null
-      tr
-        td null, td credit1
-      tr
-        td null, td credit2
-  */
+  const rowDatas: RowDisplayData[] = []
+
+  entry.debits.forEach((dr, idx) => {
+    rowDatas.push({
+      entryNumber: idx === 0 ? dr.entryNumber : null,
+      debitAccountName: dr.accountName,
+      debitAmount: dr.amount,
+      creditAccountName: null,
+      creditAmount: null
+    })
+  })
+
+  entry.credits.forEach(cr => {
+    rowDatas.push({
+      entryNumber: null,
+      debitAccountName: null,
+      debitAmount: null,
+      creditAccountName: cr.accountName,
+      creditAmount: cr.amount
+    })
+  })
 
   return (
     <>
-      {
-        entry.debits.map((debit, idx) => {
-          return (
-            <tr key={idx}>
-              {/* col for entry num, only appears on first debit */}
-              <td>{idx === 0 ? debit.entryNumber : null}</td>
-              {/* debit col */}
-              <td>{debit.amount}</td>
-              {/* credit col */}
-              <td></td>
-            </tr>
-          )
-        })
-      }
-      {
-        entry.credits.map((credit, idx) => {
-          return (
-            <tr key={idx}>
-              {/* col for entry num, only appears on first debit */}
-              <td></td>
-              {/* debit col */}
-              <td></td>
-              {/* credit col */}
-              <td>{credit.amount}</td>
-            </tr>
-          )
-        })
-      }
+      {rowDatas.map((rd, idx) => {
+        const isEven = idx % 2 === 0
+
+        return (
+          <tr className={`entry-row ${isEven ? 'dark' : ''}`} key={idx}>
+            <td>{rd.entryNumber}</td>
+            {/* NAMES - only one should be non-null */}
+            <td>{rd.debitAccountName}</td>
+            <td>{rd.creditAccountName}</td>
+            {/* AMOUNTS - only one should be non-null */}
+            <td>{rd.debitAmount}</td>
+            <td>{rd.creditAmount}</td>
+          </tr>
+        )
+      })}
     </>
   )
 }

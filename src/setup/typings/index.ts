@@ -6,7 +6,8 @@ export enum EntryType {
 export interface EntryLineItem {
   entryNumber: number
   type: EntryType
-  amount: number
+  amount: number,
+  accountName: string
 }
 
 export interface Debit extends EntryLineItem {

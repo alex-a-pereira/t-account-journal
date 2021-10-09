@@ -24,36 +24,31 @@ const TAccountEntry: React.FC<TAccountEntryProps> = (props: TAccountEntryProps) 
   )
 }
 
-// TODO: just a stub right now
-const getEntryNum = () => {
-  return Math.round(Math.random() * 100) * 2
+interface TAccountProps {
+  lineItems: EntryLineItem[],
+  accountName: string
 }
 
-export const TAccount: React.FC = () => {
-  // TODO: obviously stubbed out
-  const entryLines: EntryLineItem[] = [
-    { type: EntryType.debit, amount: 100, entryNumber: getEntryNum() },
-    { type: EntryType.debit, amount: 400, entryNumber: getEntryNum() },
-    { type: EntryType.debit, amount: 300, entryNumber: getEntryNum() },
-    { type: EntryType.credit, amount: 1200, entryNumber: getEntryNum() },
-    { type: EntryType.credit, amount: 50, entryNumber: getEntryNum() }
-  ].sort((a, b) => a.entryNumber - b.entryNumber)
+export const TAccount: React.FC<TAccountProps> = (props: TAccountProps) => {
+  const {
+    lineItems, accountName
+  } = props
 
   return (
     <div className="t-account-container">
       <div className="header">
-        <h3 className="title">Account Name</h3>
+        <h3 className="title">{accountName}</h3>
       </div>
 
       <div className='body'>
         <table>
           {
-            entryLines.map((entry, idx) => {
+            lineItems.map((li, idx) => {
               return (
                 <TAccountEntry
                   key={idx}
                   isEven={idx % 2 === 0}
-                  entryLineItem={entry}
+                  entryLineItem={li}
                 />
               )
             })
