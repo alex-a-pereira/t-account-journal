@@ -5,16 +5,8 @@ export enum EntryType {
 
 export interface EntryLineItem {
   entryNumber: number
-  type: EntryType,
+  type: EntryType
   amount: number
-}
-
-export interface EntryDebit extends EntryLineItem {
-  type: EntryType.debit
-}
-
-export interface EntryCredit extends EntryLineItem {
-  type: EntryType.credit
 }
 
 /**
@@ -24,6 +16,6 @@ export interface EntryCredit extends EntryLineItem {
  */
 export interface JournalEntry {
   entryNumber: number
-  debit: EntryDebit
-  credit: EntryCredit
+  debits: EntryLineItem[]
+  credits: EntryLineItem[]
 }
