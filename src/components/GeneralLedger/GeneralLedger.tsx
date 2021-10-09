@@ -4,7 +4,7 @@ import {
   JournalEntry
 } from '@typings'
 
-import { dataStore } from '@store'
+import { useJournalDataContext } from '@providers/JournalDataProvider'
 
 import './GeneralLedger.scss'
 
@@ -68,11 +68,13 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
 }
 
 export const GeneralLedger: React.FC = () => {
+  const { journalEntries } = useJournalDataContext()
+
   return (
     <div>
       <table className='gen-ledger-table'>
         {
-          dataStore.journalEntries.map((entry, idx) => {
+          journalEntries.map((entry, idx) => {
             return (
               <JournalEntryDisplay
                 key={idx}

@@ -7,16 +7,18 @@ import {
 import { GeneralLedger } from '@components/GeneralLedger/GeneralLedger'
 import { TAccount } from '@components/TAccount/TAccount'
 
-import { dataStore } from '@store'
+import { useJournalDataContext } from '@providers/JournalDataProvider'
 
 import './HomeScreen.scss'
 
 type TAccountDataMap = { [accountName: string]: EntryLineItem[] }
 
 export const HomeScreen: React.FC = () => {
+  const { journalEntries } = useJournalDataContext()
+
   const allAccountsMap: TAccountDataMap = {}
 
-  dataStore.journalEntries.forEach(je => {
+  journalEntries.forEach(je => {
     const { debits, credits } = je
 
     const lineItems = [...debits, ...credits]
