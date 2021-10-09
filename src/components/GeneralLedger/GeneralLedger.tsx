@@ -68,7 +68,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
 }
 
 export const GeneralLedger: React.FC = () => {
-  const { journalEntries } = useJournalDataContext()
+  const { journalEntries, createNewJournalEntry } = useJournalDataContext()
 
   return (
     <div>
@@ -85,6 +85,13 @@ export const GeneralLedger: React.FC = () => {
           })
         }
       </table>
+      <button
+        onClick={() => {
+          createNewJournalEntry()
+        }}
+      >
+        Add Entry
+      </button>
     </div>
   )
 }

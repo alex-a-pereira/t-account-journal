@@ -25,6 +25,6 @@ export interface Credit extends EntryLineItem {
  */
 export interface JournalEntry {
   entryNumber: number
-  debits: EntryLineItem[]
-  credits: EntryLineItem[]
+  debits: Debit[]
+  credits: Credit[]
 }

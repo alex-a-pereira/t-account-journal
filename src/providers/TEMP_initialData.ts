@@ -37,12 +37,14 @@ const makeCredit = (entryNumber: number, amount: number): Credit => {
   }
 }
 
+let count = 0
+
 const makeJournalEntry = (): JournalEntry => {
   const numDebits = Math.random() * (3 - 1) + 1
   const numCredits = Math.random() * (4 - 1) + 1
 
   const entryTotal = Math.random() * (1000 - 100) + 100
-  const entryNumber = 1 + Math.round(Math.random() * 100) * 2
+  const entryNumber = count++
 
   const debits: Debit[] = []
   for (let i = 0; i < numDebits; i++) {
