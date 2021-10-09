@@ -9,7 +9,9 @@
       "@components": ["./src/components"],
       "@components/*": ["./src/components/*"],
       "@typings": ["./src/setup/typings"],
-      "@typings/*": ["./src/setup/typings/*"]
+      "@typings/*": ["./src/setup/typings/*"],
+      "@store": ["./src/store"],
+      "@store/*": ["./src/store/*"]
     }
   }
 }

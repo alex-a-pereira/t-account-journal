@@ -1,9 +1,10 @@
 import React from 'react'
 
 import {
-  EntryType,
   JournalEntry
 } from '@typings'
+
+import { dataStore } from '@store'
 
 import './GeneralLedger.scss'
 
@@ -66,33 +67,12 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
   )
 }
 
-// TODO: just a stub right now
-const getEntryNum = () => {
-  return Math.round(Math.random() * 100) * 2
-}
-
 export const GeneralLedger: React.FC = () => {
-  const num = getEntryNum()
-  // clearly this is stubbed tf out
-  const entries: JournalEntry[] = [
-    {
-      entryNumber: num,
-      debits: [
-        { type: EntryType.debit, entryNumber: num, amount: 1000 }
-      ],
-      credits: [
-        { type: EntryType.credit, entryNumber: num, amount: 800 },
-        { type: EntryType.credit, entryNumber: num, amount: 100 },
-        { type: EntryType.credit, entryNumber: num, amount: 100 }
-      ]
-    }
-  ].sort((a, b) => a.entryNumber - b.entryNumber)
-
   return (
     <div>
       <table className='gen-ledger-table'>
         {
-          entries.map((entry, idx) => {
+          dataStore.journalEntries.map((entry, idx) => {
             return (
               <JournalEntryDisplay
                 key={idx}
