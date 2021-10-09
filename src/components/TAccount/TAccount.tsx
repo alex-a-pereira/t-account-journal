@@ -34,6 +34,12 @@ export const TAccount: React.FC<TAccountProps> = (props: TAccountProps) => {
     lineItems, accountName
   } = props
 
+  const endingBalance = lineItems.reduce((acc, item) => {
+    return acc + item.amount * (item.type === EntryType.debit ? 1 : -1)
+  }, 0)
+
+  const endingBalanceRounded = Math.round((endingBalance + Number.EPSILON) * 100) / 100
+
   return (
     <div className="t-account-container">
       <div className="header">
@@ -53,6 +59,12 @@ export const TAccount: React.FC<TAccountProps> = (props: TAccountProps) => {
               )
             })
           }
+          <hr className='ending-balance-divider' />
+          <tr className='t-account-total'>
+            <td className='id'></td>
+            <td className='column'>{endingBalanceRounded >= 0 ? endingBalanceRounded : null}</td>
+            <td className='column'>{endingBalanceRounded < 0 ? endingBalanceRounded * -1 : null}</td>
+          </tr>
         </table>
       </div>
     </div>
