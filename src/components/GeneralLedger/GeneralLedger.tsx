@@ -40,16 +40,19 @@ const EntryNumberColumn: React.FC<EntryNumberColumnProps> = (props: EntryNumberC
     idx, entryNumberToDel
   } = props
 
-  return (
-    <td>
-      {idx === 0 && entryNumberToDel}
-      {idx === 1 && (
-        <button onClick={() => deleteJournalEntry(entryNumberToDel)}>
+  return idx !== 0
+    ? <td />
+    : (
+      <td>
+        {entryNumberToDel}
+        <button
+          onClick={() => deleteJournalEntry(entryNumberToDel)}
+          style={{ marginLeft: 6 }}
+        >
           del
         </button>
-      )}
-    </td>
-  )
+      </td>
+      )
 }
 
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalEntryDisplayProps) => {
@@ -94,7 +97,6 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
               idx={idx}
               entryNumberToDel={entry.entryNumber}
             />
-            <td>{rd.entryNumber}</td>
             {/* NAMES - only one should be non-null */}
             <CellInput
               initialValue={rd.debitAccountName}
