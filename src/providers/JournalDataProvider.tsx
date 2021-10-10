@@ -40,11 +40,13 @@ export const JournalDataProvider: React.FC = ({ children }) => {
       {
         entryNumber,
         debits: [{
+          id: Date.now() * Math.random(),
           type: EntryType.debit,
           amount: 0,
           accountName: ''
         }],
         credits: [{
+          id: Date.now() * Math.random(),
           type: EntryType.credit,
           amount: 0,
           accountName: ''

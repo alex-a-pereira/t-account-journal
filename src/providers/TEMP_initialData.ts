@@ -19,21 +19,19 @@ const roundAmount = (amt: number) => {
   return Math.round((amt + Number.EPSILON) * 100) / 100
 }
 
-const makeDebit = (amount: number): Debit => {
-  return {
-    accountName: getAcctName(),
-    type: EntryType.debit,
-    amount: amount
-  }
-}
+const makeDebit = (amount: number): Debit => ({
+  accountName: getAcctName(),
+  type: EntryType.debit,
+  amount,
+  id: Date.now() * Math.random()
+})
 
-const makeCredit = (amount: number): Credit => {
-  return {
-    accountName: getAcctName(),
-    type: EntryType.credit,
-    amount: amount
-  }
-}
+const makeCredit = (amount: number): Credit => ({
+  accountName: getAcctName(),
+  type: EntryType.credit,
+  amount,
+  id: Date.now() * Math.random()
+})
 
 let count = 0
 

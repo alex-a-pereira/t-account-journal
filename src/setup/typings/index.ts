@@ -6,6 +6,7 @@ export enum EntryType {
 export type JournalEntryNumber = number
 
 export interface EntryLineItem {
+  id: number // essentially like a PK
   type: EntryType
   amount: number,
   accountName: string
