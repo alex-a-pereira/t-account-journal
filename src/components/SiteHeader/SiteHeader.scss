@@ -1,0 +1,33 @@
+.header-container {
+  flex: 1;
+  min-height: 24px;
+  padding: 24px 36px;
+
+  justify-content: space-around;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+
+  background-color: white;
+
+  .site-name-container {
+    flex: 2;
+    min-width: 36;
+  }
+
+  .main-items-container {
+    flex: 3;
+    min-width: 30%;
+    padding-left: 10%;
+    padding-right: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .stuff-on-right {
+    flex: 2;
+    display: flex;
+    justify-content: space-around;
+  }
+}
