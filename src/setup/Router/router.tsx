@@ -9,6 +9,7 @@ import { routes } from './routes'
 
 // screens
 import { HomeScreen } from '@screens/HomeScreen'
+import { JournalScreen } from '@screens/JournalScreen'
 
 export const AppRouter: React.FC = (props) => {
   const { children } = props
@@ -16,8 +17,20 @@ export const AppRouter: React.FC = (props) => {
     <>
       <Router>
         <Switch>
-          <Route path={routes.home()}>
+          <Route
+            exact
+            path={routes.home()}
+          >
             <HomeScreen />
+          </Route>
+          <Route
+            // TODO: better way to do this than array?
+            // TODO: type for the saved param.. e.g. IntegerLikeString | 'new'
+            path={[
+              routes.journal(''), routes.journal(':id')
+            ]}
+          >
+            <JournalScreen />
           </Route>
         </Switch>
       </Router>

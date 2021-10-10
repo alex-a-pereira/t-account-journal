@@ -1,0 +1,18 @@
+.screen-container {
+  background-color: #f3f4f3;
+  width: 80%;
+  margin: auto;
+  padding: 5%;
+
+  .general-ledger-section {
+    margin-top: 12px;
+    margin-bottom: 24px;
+  }
+
+  .t-accounts-section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
