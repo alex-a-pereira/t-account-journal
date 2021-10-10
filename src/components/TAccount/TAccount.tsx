@@ -59,9 +59,8 @@ export const TAccount: React.FC<TAccountProps> = (props: TAccountProps) => {
               )
             })
           }
-          <hr className='ending-balance-divider' />
           <tr className='t-account-total'>
-            <td className='id'></td>
+            <td className='ending-bal-text'>bal</td>
             <td className='column'>{endingBalanceRounded >= 0 ? endingBalanceRounded : null}</td>
             <td className='column'>{endingBalanceRounded < 0 ? endingBalanceRounded * -1 : null}</td>
           </tr>

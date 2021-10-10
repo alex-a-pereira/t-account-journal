@@ -48,6 +48,13 @@
     }
 
     .t-account-total {
+      background-color: $light-teal;
+
+      .ending-bal-text {
+        font-weight: normal;
+        font-size: smaller;
+      }
+
       font-weight: bold;
     }
   }
