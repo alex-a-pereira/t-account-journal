@@ -3,7 +3,8 @@ import React, { PropsWithChildren } from 'react'
 import {
   JournalEntry,
   JournalEntryNumber,
-  JournalInputValue
+  JournalInputValue,
+  EntryType
 } from '@typings'
 
 import { useJournalDataContext } from '@providers/JournalDataProvider'
@@ -18,14 +19,6 @@ import './GeneralLedger.scss'
 interface JournalEntryDisplayProps {
   entryNumber: number
   entry: JournalEntry
-}
-
-interface RowDisplayData {
-  entryNumber: number | null
-  debitAccountName: JournalInputValue
-  debitAmount: JournalInputValue
-  creditAccountName: JournalInputValue
-  creditAmount: JournalInputValue
 }
 
 type EntryNumberColumnProps = PropsWithChildren<{
@@ -58,28 +51,7 @@ const EntryNumberColumn: React.FC<EntryNumberColumnProps> = (props: EntryNumberC
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalEntryDisplayProps) => {
   const { entry } = props
 
-  const rowDatas: RowDisplayData[] = []
-
-  entry.debits.forEach((dr, idx) => {
-    rowDatas.push({
-      // only show entry number on first debit
-      entryNumber: idx === 0 ? entry.entryNumber : null,
-      debitAccountName: dr.accountName,
-      debitAmount: dr.amount,
-      creditAccountName: undefined,
-      creditAmount: undefined
-    })
-  })
-
-  entry.credits.forEach(cr => {
-    rowDatas.push({
-      entryNumber: null,
-      debitAccountName: undefined,
-      debitAmount: undefined,
-      creditAccountName: cr.accountName,
-      creditAmount: cr.amount
-    })
-  })
+  const entryLineItems = [...entry.debits, ...entry.credits]
 
   const updateEntryLineItem = (field: string, newValue: JournalInputValue) => {
     console.log(`changing ${field} to ${newValue}`)
@@ -87,7 +59,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
 
   return (
     <>
-      {rowDatas.map((rd, idx) => {
+      {entryLineItems.map((entryLineItem, idx) => {
         const isEven = idx % 2 === 0
 
         return (
@@ -98,35 +70,59 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
               entryNumberToDel={entry.entryNumber}
             />
             {/* NAMES - only one should be non-null */}
-            <CellInput
-              initialValue={rd.debitAccountName}
-              isEditable={rd.debitAccountName !== undefined}
-              onChange={(value) => {
-                updateEntryLineItem('debitAccountName', value)
-              }}
-            />
-            <CellInput
-              initialValue={rd.creditAccountName}
-              isEditable={rd.creditAccountName !== undefined}
-              onChange={(value) => {
-                updateEntryLineItem('creditAccountName', value)
-              }}
-            />
+            {
+              entryLineItem.type !== EntryType.debit
+                ? <td />
+                : (
+                  <CellInput
+                    initialValue={entryLineItem.accountName}
+                    isEditable={entryLineItem.accountName !== undefined}
+                    onChange={(value) => {
+                      updateEntryLineItem('debitAccountName', value)
+                    }}
+                  />
+                  )
+            }
+            {
+              entryLineItem.type !== EntryType.credit
+                ? <td />
+                : (
+                  <CellInput
+                    initialValue={entryLineItem.accountName}
+                    isEditable={entryLineItem.accountName !== undefined}
+                    onChange={(value) => {
+                      updateEntryLineItem('creditAccountName', value)
+                    }}
+                  />
+                  )
+            }
             {/* AMOUNTS - only one should be non-null */}
-            <CellInput
-              initialValue={rd.debitAmount}
-              isEditable={rd.debitAmount !== undefined}
-              onChange={(value) => {
-                updateEntryLineItem('creditAmount', value)
-              }}
-            />
-            <CellInput
-              initialValue={rd.creditAmount}
-              isEditable={rd.creditAmount !== undefined}
-              onChange={(value) => {
-                updateEntryLineItem('creditAmount', value)
-              }}
-            />
+            {
+              entryLineItem.type !== EntryType.debit
+                ? <td />
+                : (
+                  <CellInput
+                    initialValue={entryLineItem.amount}
+                    isEditable={entryLineItem.amount !== undefined}
+                    onChange={(value) => {
+                      updateEntryLineItem('debitAmount', value)
+                    }}
+                  />
+                  )
+            }
+            {
+              entryLineItem.type !== EntryType.credit
+                ? <td />
+                : (
+                  <CellInput
+                    initialValue={entryLineItem.amount}
+                    isEditable={entryLineItem.amount !== undefined}
+                    onChange={(value) => {
+                      updateEntryLineItem('creditAmount', value)
+                    }}
+                  />
+                  )
+            }
           </tr>
         )
       })}
