@@ -1,21 +1,36 @@
 import React, { useContext, useState } from 'react'
 
-import { JournalEntry, EntryType } from '@typings'
+import { JournalEntry, EntryType, JournalEntryNumber } from '@typings'
 
 import { dataStore } from './TEMP_initialData'
 
 interface JournalData {
   journalEntries: JournalEntry[]
-  createNewJournalEntry: Function
+  createNewJournalEntry: Function,
+  deleteJournalEntry: Function
 }
 
 const JournalDataContext = React.createContext<JournalData>({
   journalEntries: dataStore.journalEntries,
-  createNewJournalEntry: () => {}
+  createNewJournalEntry: () => {},
+  deleteJournalEntry: () => {}
 })
 
 export const JournalDataProvider: React.FC = ({ children }) => {
   const [journalEntries, setJournalEntries] = useState(dataStore.journalEntries)
+
+  const deleteJournalEntry = (entryNumber: JournalEntryNumber) => {
+    const idxToRemove = journalEntries.findIndex(je => je.entryNumber === entryNumber)
+    const newJournalEntries = [
+      ...journalEntries.slice(0, idxToRemove),
+      ...journalEntries.slice(idxToRemove + 1, journalEntries.length)
+    ].map((je, idx) => {
+      // re-indexes all the JournalEntry.entryNumber from 0, as deleting would mess up ordering
+      return { ...je, entryNumber: idx }
+    })
+
+    setJournalEntries(newJournalEntries)
+  }
 
   const createNewJournalEntry = () => {
     // auo increments
@@ -40,7 +55,8 @@ export const JournalDataProvider: React.FC = ({ children }) => {
 
   const ctxVal = {
     journalEntries,
-    createNewJournalEntry
+    createNewJournalEntry,
+    deleteJournalEntry
   }
 
   return (

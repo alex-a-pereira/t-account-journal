@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 
 import {
   JournalEntry,
+  JournalEntryNumber,
   JournalInputValue
 } from '@typings'
 
@@ -25,6 +26,30 @@ interface RowDisplayData {
   debitAmount: JournalInputValue
   creditAccountName: JournalInputValue
   creditAmount: JournalInputValue
+}
+
+type EntryNumberColumnProps = PropsWithChildren<{
+  idx: number
+  entryNumberToDel: JournalEntryNumber
+}>
+
+const EntryNumberColumn: React.FC<EntryNumberColumnProps> = (props: EntryNumberColumnProps) => {
+  const { deleteJournalEntry } = useJournalDataContext()
+
+  const {
+    idx, entryNumberToDel
+  } = props
+
+  return (
+    <td>
+      {idx === 0 && entryNumberToDel}
+      {idx === 1 && (
+        <button onClick={() => deleteJournalEntry(entryNumberToDel)}>
+          del
+        </button>
+      )}
+    </td>
+  )
 }
 
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalEntryDisplayProps) => {
@@ -64,6 +89,11 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
 
         return (
           <tr className={`entry-row ${isEven ? 'dark' : ''}`} key={idx}>
+            {/* TODO: hacky as hell lol */}
+            <EntryNumberColumn
+              idx={idx}
+              entryNumberToDel={entry.entryNumber}
+            />
             <td>{rd.entryNumber}</td>
             {/* NAMES - only one should be non-null */}
             <CellInput
