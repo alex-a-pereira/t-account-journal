@@ -19,19 +19,17 @@ const roundAmount = (amt: number) => {
   return Math.round((amt + Number.EPSILON) * 100) / 100
 }
 
-const makeDebit = (entryNumber: number, amount: number): Debit => {
+const makeDebit = (amount: number): Debit => {
   return {
     accountName: getAcctName(),
-    entryNumber,
     type: EntryType.debit,
     amount: amount
   }
 }
 
-const makeCredit = (entryNumber: number, amount: number): Credit => {
+const makeCredit = (amount: number): Credit => {
   return {
     accountName: getAcctName(),
-    entryNumber,
     type: EntryType.credit,
     amount: amount
   }
@@ -50,7 +48,6 @@ const makeJournalEntry = (): JournalEntry => {
   for (let i = 0; i < numDebits; i++) {
     debits.push(
       makeDebit(
-        entryNumber,
         roundAmount(entryTotal / numDebits)
       )
     )
@@ -60,7 +57,6 @@ const makeJournalEntry = (): JournalEntry => {
   for (let i = 0; i < numCredits; i++) {
     credits.push(
       makeCredit(
-        entryNumber,
         roundAmount(entryTotal / numCredits)
       )
     )

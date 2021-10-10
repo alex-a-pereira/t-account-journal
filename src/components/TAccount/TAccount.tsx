@@ -2,14 +2,14 @@ import React from 'react'
 
 import {
   EntryType,
-  EntryLineItem
+  EntryLineItemWithEntryNumber
 } from '@typings'
 
 import './TAccount.scss'
 
 interface TAccountEntryProps {
   isEven: boolean
-  entryLineItem: EntryLineItem
+  entryLineItem: EntryLineItemWithEntryNumber
 }
 
 const TAccountEntry: React.FC<TAccountEntryProps> = (props: TAccountEntryProps) => {
@@ -25,7 +25,7 @@ const TAccountEntry: React.FC<TAccountEntryProps> = (props: TAccountEntryProps) 
 }
 
 interface TAccountProps {
-  lineItems: EntryLineItem[],
+  lineItems: EntryLineItemWithEntryNumber[],
   accountName: string
 }
 

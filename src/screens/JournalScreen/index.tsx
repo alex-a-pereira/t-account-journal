@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {
-  EntryLineItem
+  EntryLineItemWithEntryNumber
 } from '@typings'
 
 import { GeneralLedger } from '@components/GeneralLedger/GeneralLedger'
@@ -11,7 +11,7 @@ import { useJournalDataContext } from '@providers/JournalDataProvider'
 
 import './JournalScreen.scss'
 
-type TAccountDataMap = { [accountName: string]: EntryLineItem[] }
+type TAccountDataMap = { [accountName: string]: EntryLineItemWithEntryNumber[] }
 
 export const JournalScreen: React.FC = () => {
   const { journalEntries } = useJournalDataContext()
@@ -19,12 +19,15 @@ export const JournalScreen: React.FC = () => {
   const allAccountsMap: TAccountDataMap = {}
 
   journalEntries.forEach(je => {
-    const { debits, credits } = je
+    const { debits, credits, entryNumber } = je
 
     const lineItems = [...debits, ...credits]
-    lineItems.forEach(li => {
-      allAccountsMap[li.accountName] = allAccountsMap[li.accountName] ?? []
-      allAccountsMap[li.accountName].push(li)
+    lineItems.forEach(lineItem => {
+      allAccountsMap[lineItem.accountName] = allAccountsMap[lineItem.accountName] ?? []
+      // we only add in entryNumber for supplemental data purposes (UI needs it)
+      allAccountsMap[lineItem.accountName].push({
+        ...lineItem, entryNumber
+      })
     })
   })
 

@@ -1,0 +1,14 @@
+.table {
+  width: 100%;
+  border: 1px solid $border-color;
+}
+
+.row {
+  &.header {
+    font-weight: bold;
+  }
+
+  &.dark {
+    background-color: $kinda-light-gray;
+  }
+}

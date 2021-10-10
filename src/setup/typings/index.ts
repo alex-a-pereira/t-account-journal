@@ -3,11 +3,18 @@ export enum EntryType {
   debit
 }
 
+export type JournalEntryNumber = number
+
 export interface EntryLineItem {
-  entryNumber: number
   type: EntryType
   amount: number,
   accountName: string
+}
+
+// NOTE: should only be used for adding supplementary data for UI purposes!
+// i.e. the "source of truth" for entry number should ALWAYS come from JournalEntry
+export interface EntryLineItemWithEntryNumber extends EntryLineItem {
+  entryNumber: JournalEntryNumber
 }
 
 export interface Debit extends EntryLineItem {
@@ -24,7 +31,7 @@ export interface Credit extends EntryLineItem {
  * to have the same entryNumber!!!
  */
 export interface JournalEntry {
-  entryNumber: number
+  entryNumber: JournalEntryNumber
   debits: Debit[]
   credits: Credit[]
 }

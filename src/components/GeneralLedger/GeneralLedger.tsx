@@ -34,7 +34,8 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
 
   entry.debits.forEach((dr, idx) => {
     rowDatas.push({
-      entryNumber: idx === 0 ? dr.entryNumber : null,
+      // only show entry number on first debit
+      entryNumber: idx === 0 ? entry.entryNumber : null,
       debitAccountName: dr.accountName,
       debitAmount: dr.amount,
       creditAccountName: undefined,

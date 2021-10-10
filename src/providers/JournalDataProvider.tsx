@@ -25,13 +25,11 @@ export const JournalDataProvider: React.FC = ({ children }) => {
       {
         entryNumber,
         debits: [{
-          entryNumber,
           type: EntryType.debit,
           amount: 0,
           accountName: ''
         }],
         credits: [{
-          entryNumber,
           type: EntryType.credit,
           amount: 0,
           accountName: ''
