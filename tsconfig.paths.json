@@ -13,7 +13,9 @@
       "@store": ["./src/store"],
       "@store/*": ["./src/store/*"],
       "@providers": ["./src/providers"],
-      "@providers/*": ["./src/providers/*"]
+      "@providers/*": ["./src/providers/*"],
+      "@reactHooks": ["./src/reactHooks"],
+      "@reactHooks/*": ["./src/reactHooks/*"]
     }
   }
 }
