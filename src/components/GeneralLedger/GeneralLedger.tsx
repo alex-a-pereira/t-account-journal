@@ -1,7 +1,8 @@
 import React from 'react'
 
 import {
-  JournalEntry
+  JournalEntry,
+  JournalInput
 } from '@typings'
 
 import { useJournalDataContext } from '@providers/JournalDataProvider'
@@ -15,10 +16,10 @@ interface JournalEntryDisplayProps {
 
 interface RowDisplayData {
   entryNumber: number | null
-  debitAccountName: string | null
-  debitAmount: number | null
-  creditAccountName: string | null
-  creditAmount: number | null
+  debitAccountName: JournalInput
+  debitAmount: JournalInput
+  creditAccountName: JournalInput
+  creditAmount: JournalInput
 }
 
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalEntryDisplayProps) => {
@@ -31,16 +32,16 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
       entryNumber: idx === 0 ? dr.entryNumber : null,
       debitAccountName: dr.accountName,
       debitAmount: dr.amount,
-      creditAccountName: null,
-      creditAmount: null
+      creditAccountName: undefined,
+      creditAmount: undefined
     })
   })
 
   entry.credits.forEach(cr => {
     rowDatas.push({
       entryNumber: null,
-      debitAccountName: null,
-      debitAmount: null,
+      debitAccountName: undefined,
+      debitAmount: undefined,
       creditAccountName: cr.accountName,
       creditAmount: cr.amount
     })

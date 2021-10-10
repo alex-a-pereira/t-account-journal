@@ -28,3 +28,6 @@ export interface JournalEntry {
   debits: Debit[]
   credits: Credit[]
 }
+
+// from @types/react InputHTMLAttributes
+export type JournalInput = string | number | readonly string[] | undefined
