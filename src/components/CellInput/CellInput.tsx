@@ -6,6 +6,8 @@ import {
 
 import { useOnClickOutside } from '@reactHooks/useOnClickOutside'
 
+import './CellInput.scss'
+
 interface CellInputProps {
   className?: string
   initialValue?: JournalInputValue
@@ -36,23 +38,31 @@ export const CellInput: React.FC<CellInputProps> = (props: CellInputProps) => {
   const shouldRenderPTag = !isEditable || !isEditing
 
   return (
-    <td className={className}>
+    <td
+      className={className}
+      onClick={() => {
+        if (!isEditing) {
+          setIsEditing(true)
+        }
+      }
+      }
+    >
       {
         shouldRenderPTag
           ? (
-            <p onClick={() => { setIsEditing(true) }}>
+            <p className='cell-static-text'>
               {value}
             </p>
             )
           : (
             <input
-            ref={inputRef}
-            type='text'
-            value={value}
-            onChange={e => {
-              handleChange(e.target.value)
-            }}
-          />
+              ref={inputRef}
+              type='text'
+              value={value}
+              onChange={e => {
+                handleChange(e.target.value)
+              }}
+            />
             )
       }
     </td>
