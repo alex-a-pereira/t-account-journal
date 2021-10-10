@@ -48,7 +48,8 @@ export const TAccount: React.FC<TAccountProps> = (props: TAccountProps) => {
 
       <div className='body'>
         <table>
-          {
+          <tbody>
+            {
             lineItems.map((li, idx) => {
               return (
                 <TAccountEntry
@@ -59,11 +60,12 @@ export const TAccount: React.FC<TAccountProps> = (props: TAccountProps) => {
               )
             })
           }
-          <tr className='t-account-total'>
-            <td className='ending-bal-text'>bal</td>
-            <td className='column'>{endingBalanceRounded >= 0 ? endingBalanceRounded : null}</td>
-            <td className='column'>{endingBalanceRounded < 0 ? endingBalanceRounded * -1 : null}</td>
-          </tr>
+            <tr className='t-account-total'>
+              <td className='ending-bal-text'>bal</td>
+              <td className='column'>{endingBalanceRounded >= 0 ? endingBalanceRounded : null}</td>
+              <td className='column'>{endingBalanceRounded < 0 ? endingBalanceRounded * -1 : null}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>

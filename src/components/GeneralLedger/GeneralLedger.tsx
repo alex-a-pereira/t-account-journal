@@ -107,8 +107,8 @@ export const GeneralLedger: React.FC = () => {
   return (
     <div>
       <table className='gen-ledger-table'>
-        {
-          journalEntries.map((entry, idx) => {
+        <tbody>
+          {journalEntries.map((entry, idx) => {
             return (
               <JournalEntryDisplay
                 key={idx}
@@ -116,8 +116,8 @@ export const GeneralLedger: React.FC = () => {
                 entryNumber={entry.entryNumber}
               />
             )
-          })
-        }
+          })}
+        </tbody>
       </table>
       <button
         onClick={() => {
