@@ -10,6 +10,7 @@ import { routes } from './routes'
 // screens
 import { HomeScreen } from '@screens/HomeScreen'
 import { JournalScreen } from '@screens/JournalScreen'
+import { FourOhFourScreen } from '@screens/FourOhFourScreen'
 
 interface AppRouterProps {
   HeaderComponent: React.FC
@@ -29,6 +30,7 @@ export const AppRouter: React.FC<AppRouterProps> = (props: AppRouterProps) => {
             <HomeScreen />
           </Route>
           <Route
+            exact
             // TODO: better way to do this than array?
             // TODO: type for the saved param.. e.g. IntegerLikeString | 'new'
             path={[
@@ -36,6 +38,10 @@ export const AppRouter: React.FC<AppRouterProps> = (props: AppRouterProps) => {
             ]}
           >
             <JournalScreen />
+          </Route>
+
+          <Route path='*'>
+            <FourOhFourScreen />
           </Route>
         </Switch>
       </Router>
