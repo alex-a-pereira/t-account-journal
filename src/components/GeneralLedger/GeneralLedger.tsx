@@ -2,10 +2,15 @@ import React from 'react'
 
 import {
   JournalEntry,
-  JournalInput
+  JournalInputValue
 } from '@typings'
 
 import { useJournalDataContext } from '@providers/JournalDataProvider'
+
+// UI components
+import {
+  CellInput
+} from '@components/CellInput/CellInput'
 
 import './GeneralLedger.scss'
 
@@ -16,10 +21,10 @@ interface JournalEntryDisplayProps {
 
 interface RowDisplayData {
   entryNumber: number | null
-  debitAccountName: JournalInput
-  debitAmount: JournalInput
-  creditAccountName: JournalInput
-  creditAmount: JournalInput
+  debitAccountName: JournalInputValue
+  debitAmount: JournalInputValue
+  creditAccountName: JournalInputValue
+  creditAmount: JournalInputValue
 }
 
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalEntryDisplayProps) => {
@@ -47,6 +52,10 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
     })
   })
 
+  const updateEntryLineItem = (field: string, newValue: JournalInputValue) => {
+    console.log(`changing ${field} to ${newValue}`)
+  }
+
   return (
     <>
       {rowDatas.map((rd, idx) => {
@@ -56,11 +65,35 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
           <tr className={`entry-row ${isEven ? 'dark' : ''}`} key={idx}>
             <td>{rd.entryNumber}</td>
             {/* NAMES - only one should be non-null */}
-            <td>{rd.debitAccountName}</td>
-            <td>{rd.creditAccountName}</td>
+            <CellInput
+              initialValue={rd.debitAccountName}
+              isEditable={rd.debitAccountName !== undefined}
+              onChange={(value) => {
+                updateEntryLineItem('debitAccountName', value)
+              }}
+            />
+            <CellInput
+              initialValue={rd.creditAccountName}
+              isEditable={rd.creditAccountName !== undefined}
+              onChange={(value) => {
+                updateEntryLineItem('creditAccountName', value)
+              }}
+            />
             {/* AMOUNTS - only one should be non-null */}
-            <td>{rd.debitAmount}</td>
-            <td>{rd.creditAmount}</td>
+            <CellInput
+              initialValue={rd.debitAmount}
+              isEditable={rd.debitAmount !== undefined}
+              onChange={(value) => {
+                updateEntryLineItem('creditAmount', value)
+              }}
+            />
+            <CellInput
+              initialValue={rd.creditAmount}
+              isEditable={rd.creditAmount !== undefined}
+              onChange={(value) => {
+                updateEntryLineItem('creditAmount', value)
+              }}
+            />
           </tr>
         )
       })}

@@ -30,4 +30,4 @@ export interface JournalEntry {
 }
 
 // from @types/react InputHTMLAttributes
-export type JournalInput = string | number | readonly string[] | undefined
+export type JournalInputValue = string | number | readonly string[] | undefined
