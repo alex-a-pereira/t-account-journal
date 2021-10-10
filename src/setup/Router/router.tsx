@@ -11,11 +11,16 @@ import { routes } from './routes'
 import { HomeScreen } from '@screens/HomeScreen'
 import { JournalScreen } from '@screens/JournalScreen'
 
-export const AppRouter: React.FC = (props) => {
-  const { children } = props
+interface AppRouterProps {
+  HeaderComponent: React.FC
+}
+
+export const AppRouter: React.FC<AppRouterProps> = (props: AppRouterProps) => {
+  const { HeaderComponent } = props
   return (
     <>
       <Router>
+        <HeaderComponent />
         <Switch>
           <Route
             exact
@@ -34,7 +39,6 @@ export const AppRouter: React.FC = (props) => {
           </Route>
         </Switch>
       </Router>
-      {children}
     </>
   )
 }

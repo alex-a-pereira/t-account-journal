@@ -10,12 +10,10 @@ import { AppRouter } from '@setup/Router/router'
 function App () {
   return (
     <div className='App'>
-      <SiteHeader />
       <JournalDataProvider>
-        <AppRouter>
-          {/* placeholder for future stuff */}
-          <div />
-        </AppRouter>
+        <AppRouter
+          HeaderComponent={SiteHeader}
+        />
       </JournalDataProvider>
     </div>
   )

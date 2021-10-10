@@ -1,12 +1,17 @@
 import React from 'react'
-
+// nav
+import { useHistory } from 'react-router-dom'
+import { routes } from '@setup/Router/routes'
+// styles
 import './SiteHeader.scss'
 
 export const SiteHeader: React.FC = () => {
+  const history = useHistory()
+
   return (
     <div className='header-container'>
       <div className='site-name-container'>
-        <h2>SITE NAME</h2>
+        <h2 onClick={() => history.push(routes.home())}>SITE NAME</h2>
       </div>
 
       <div className='main-items-container'>

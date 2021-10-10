@@ -11,6 +11,9 @@
   background-color: white;
 
   .site-name-container {
+    &:hover {
+      cursor: pointer;
+    }
     flex: 2;
     min-width: 36;
   }
