@@ -1,5 +1,5 @@
 import {
-  EntryType, Debit, Credit, JournalEntry, EntryLineItem
+  EntryType, Debit, Credit, JournalEntry, JournalEntryNumber, EntryLineItem
 } from '@typings'
 
 const accountNames = [
@@ -19,15 +19,17 @@ const roundAmount = (amt: number) => {
   return Math.round((amt + Number.EPSILON) * 100) / 100
 }
 
-const makeDebit = (amount: number): Debit => ({
+const makeDebit = (entryNumber: JournalEntryNumber, amount: number): Debit => ({
   accountName: getAcctName(),
+  entryNumber,
   type: EntryType.debit,
   amount,
   id: Date.now() * Math.random()
 })
 
-const makeCredit = (amount: number): Credit => ({
+const makeCredit = (entryNumber: JournalEntryNumber, amount: number): Credit => ({
   accountName: getAcctName(),
+  entryNumber,
   type: EntryType.credit,
   amount,
   id: Date.now() * Math.random()
@@ -46,6 +48,7 @@ const makeJournalEntry = (): JournalEntry => {
   for (let i = 0; i < numDebits; i++) {
     debits.push(
       makeDebit(
+        entryNumber,
         roundAmount(entryTotal / numDebits)
       )
     )
@@ -55,6 +58,7 @@ const makeJournalEntry = (): JournalEntry => {
   for (let i = 0; i < numCredits; i++) {
     credits.push(
       makeCredit(
+        entryNumber,
         roundAmount(entryTotal / numCredits)
       )
     )
@@ -63,35 +67,24 @@ const makeJournalEntry = (): JournalEntry => {
   return { entryNumber, debits, credits }
 }
 
-type EntryLineIdToEntryLineMap = { [entryLineItemId: number]: EntryLineItem }
-
-const makeJeAndSplitIntoLineItemMap = (): EntryLineIdToEntryLineMap => {
+const makeJeAndTransformToArr = (): EntryLineItem[] => {
   const je = makeJournalEntry()
-
-  const ret: EntryLineIdToEntryLineMap = {}
-
-  je.debits.forEach(dr => { ret[dr.id] = dr })
-  je.credits.forEach(cr => { ret[cr.id] = cr })
-
-  return ret
+  return [...je.debits, ...je.credits]
 }
 
 interface DataStore {
   journalEntries: JournalEntry[],
   // TODO: migrate everything to use this
-  entryLineItemsMap: EntryLineIdToEntryLineMap
+  entryLineItems: EntryLineItem[]
 }
 
 export const dataStore: DataStore = {
   journalEntries: [
-    makeJournalEntry(),
-    makeJournalEntry(),
-    makeJournalEntry()
-  ].sort((a, b) => a.entryNumber - b.entryNumber),
-  entryLineItemsMap: {
-    ...makeJeAndSplitIntoLineItemMap(),
-    ...makeJeAndSplitIntoLineItemMap(),
-    ...makeJeAndSplitIntoLineItemMap(),
-    ...makeJeAndSplitIntoLineItemMap()
-  }
+  ],
+  entryLineItems: [
+    ...makeJeAndTransformToArr(),
+    ...makeJeAndTransformToArr(),
+    ...makeJeAndTransformToArr(),
+    ...makeJeAndTransformToArr()
+  ]
 }

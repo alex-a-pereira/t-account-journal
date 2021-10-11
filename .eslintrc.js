@@ -23,7 +23,7 @@ module.exports = {
   rules: {
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
-    'react/jsx-indent': ['error', 2],
+    'react/jsx-indent': ['error', 2, { checkAttributes: true, indentLogicalExpressions: true }],
     'react/prop-types': [
       2, { ignore: ['children'] }],
     // api responses are in camel case, if this was real code

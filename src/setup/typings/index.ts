@@ -9,7 +9,8 @@ export interface EntryLineItem {
   id: number // essentially like a PK
   type: EntryType
   amount: number,
-  accountName: string
+  accountName: string,
+  entryNumber: JournalEntryNumber
 }
 
 // NOTE: should only be used for adding supplementary data for UI purposes!
