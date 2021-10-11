@@ -2,8 +2,7 @@ import React, { PropsWithChildren } from 'react'
 
 import {
   JournalEntry,
-  JournalEntryNumber,
-  JournalInputValue,
+  EntryLineItem,
   EntryType
 } from '@typings'
 
@@ -23,23 +22,23 @@ interface JournalEntryDisplayProps {
 
 type EntryNumberColumnProps = PropsWithChildren<{
   idx: number
-  entryNumberToDel: JournalEntryNumber
+  entryLineItem: EntryLineItem
 }>
 
 const EntryNumberColumn: React.FC<EntryNumberColumnProps> = (props: EntryNumberColumnProps) => {
   const { deleteJournalEntry } = useJournalDataContext()
 
   const {
-    idx, entryNumberToDel
+    idx, entryLineItem
   } = props
 
   return idx !== 0
     ? <td />
     : (
       <td>
-        {entryNumberToDel}
+        {entryLineItem.entryNumber}
         <button
-          onClick={() => deleteJournalEntry(entryNumberToDel)}
+          onClick={() => deleteJournalEntry(entryLineItem.entryNumber)}
           style={{ marginLeft: 6 }}
         >
           del
@@ -49,13 +48,15 @@ const EntryNumberColumn: React.FC<EntryNumberColumnProps> = (props: EntryNumberC
 }
 
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalEntryDisplayProps) => {
+  const { updateEntryLineItem } = useJournalDataContext()
+
   const { entry } = props
 
   const entryLineItems = [...entry.debits, ...entry.credits]
 
-  const updateEntryLineItem = (field: string, newValue: JournalInputValue) => {
-    console.log(`changing ${field} to ${newValue}`)
-  }
+  // const updateEntryLineItem = (field: string, newValue: JournalInputValue) => {
+  //   console.log(`changing ${field} to ${newValue}`)
+  // }
 
   return (
     <>
@@ -67,7 +68,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
             {/* TODO: hacky as hell lol */}
             <EntryNumberColumn
               idx={idx}
-              entryNumberToDel={entry.entryNumber}
+              entryLineItem={entryLineItem}
             />
             {/* NAMES - only one should be non-null */}
             {
@@ -78,7 +79,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
                     initialValue={entryLineItem.accountName}
                     isEditable={entryLineItem.accountName !== undefined}
                     onChange={(value) => {
-                      updateEntryLineItem('debitAccountName', value)
+                      updateEntryLineItem(entryLineItem.id, { accountName: value })
                     }}
                   />
                   )
@@ -91,7 +92,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
                     initialValue={entryLineItem.accountName}
                     isEditable={entryLineItem.accountName !== undefined}
                     onChange={(value) => {
-                      updateEntryLineItem('creditAccountName', value)
+                      updateEntryLineItem(entryLineItem.id, { accountName: value })
                     }}
                   />
                   )
@@ -105,7 +106,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
                     initialValue={entryLineItem.amount}
                     isEditable={entryLineItem.amount !== undefined}
                     onChange={(value) => {
-                      updateEntryLineItem('debitAmount', value)
+                      updateEntryLineItem(entryLineItem.id, { amount: parseFloat(value as string) })
                     }}
                   />
                   )
@@ -118,7 +119,8 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
                     initialValue={entryLineItem.amount}
                     isEditable={entryLineItem.amount !== undefined}
                     onChange={(value) => {
-                      updateEntryLineItem('creditAmount', value)
+                      // TODO: fix typing on this
+                      updateEntryLineItem(entryLineItem.id, { amount: parseFloat(value as string) })
                     }}
                   />
                   )

@@ -14,13 +14,15 @@ import { dataStore } from './TEMP_initialData'
 interface JournalData {
   journalEntries: JournalEntry[]
   createNewJournalEntry: Function,
-  deleteJournalEntry: Function
+  deleteJournalEntry: Function,
+  updateEntryLineItem: Function
 }
 
 const JournalDataContext = React.createContext<JournalData>({
   journalEntries: dataStore.journalEntries,
   createNewJournalEntry: () => {},
-  deleteJournalEntry: () => {}
+  deleteJournalEntry: () => {},
+  updateEntryLineItem: () => {}
 })
 
 const lineItemsToJournalEntryArr = (entryLineItems: EntryLineItem[]): JournalEntry[] => {
@@ -55,22 +57,9 @@ export const JournalDataProvider: React.FC = ({ children }) => {
   // easier access for consumers
   const journalEntries = lineItemsToJournalEntryArr(entryLineItems)
 
-  // deletes one single EntryLineItem
-  const deleteLineItems = (lineItemIds: number[]) => {
-    const newLineItems = entryLineItems
-      .filter(li => !lineItemIds.includes(li.id))
-    // TODO: fix the auto increment
-    setEntryLineItems(newLineItems)
-  }
-
-  // deletes every single EntryLineItem for a particular JournalEntry
-  const deleteJournalEntry = (entryNumber: JournalEntryNumber) => {
-    const journalEntry = journalEntries.find(je => je.entryNumber === entryNumber)
-    if (!journalEntry) { return }
-
-    const allEntryLineItems = [...journalEntry.debits, ...journalEntry.credits]
-    deleteLineItems(allEntryLineItems.map(eli => eli.id))
-  }
+  /**
+   * CREATE
+   */
 
   const createNewJournalEntry = () => {
     // make sure new entries have the next ID in line
@@ -95,10 +84,52 @@ export const JournalDataProvider: React.FC = ({ children }) => {
     setEntryLineItems([...entryLineItems, newDebit, newCredit])
   }
 
+  /**
+   * UPDATE
+   */
+
+  const updateEntryLineItem = (lineItemId: number, newData: Partial<EntryLineItem>) => {
+    const idxOfItemToUpdate = entryLineItems.findIndex(li => li.id === lineItemId)
+    if (idxOfItemToUpdate < 0) { return }
+
+    const newFullRecord = {
+      ...entryLineItems[idxOfItemToUpdate],
+      ...newData
+    }
+
+    setEntryLineItems([
+      ...entryLineItems.slice(0, idxOfItemToUpdate),
+      newFullRecord,
+      ...entryLineItems.slice(idxOfItemToUpdate + 1, entryLineItems.length)
+    ])
+  }
+
+  /**
+   * DELETE
+   */
+
+  // deletes one single EntryLineItem
+  const deleteLineItems = (lineItemIds: number[]) => {
+    const newLineItems = entryLineItems
+      .filter(li => !lineItemIds.includes(li.id))
+    // TODO: fix the auto increment
+    setEntryLineItems(newLineItems)
+  }
+
+  // deletes every single EntryLineItem for a particular JournalEntry
+  const deleteJournalEntry = (entryNumber: JournalEntryNumber) => {
+    const journalEntry = journalEntries.find(je => je.entryNumber === entryNumber)
+    if (!journalEntry) { return }
+
+    const allEntryLineItems = [...journalEntry.debits, ...journalEntry.credits]
+    deleteLineItems(allEntryLineItems.map(eli => eli.id))
+  }
+
   const ctxVal = {
     journalEntries,
     createNewJournalEntry,
-    deleteJournalEntry
+    deleteJournalEntry,
+    updateEntryLineItem
   }
 
   return (
