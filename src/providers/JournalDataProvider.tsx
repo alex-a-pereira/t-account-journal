@@ -55,41 +55,44 @@ export const JournalDataProvider: React.FC = ({ children }) => {
   // easier access for consumers
   const journalEntries = lineItemsToJournalEntryArr(entryLineItems)
 
-  const deleteJournalEntry = (entryNumber: JournalEntryNumber) => {
-    console.log(entryNumber)
-    // const idxToRemove = journalEntries.findIndex(je => je.entryNumber === entryNumber)
-    // const newJournalEntries = [
-    //   ...journalEntries.slice(0, idxToRemove),
-    //   ...journalEntries.slice(idxToRemove + 1, journalEntries.length)
-    // ].map((je, idx) => {
-    //   // re-indexes all the JournalEntry.entryNumber from 0, as deleting would mess up ordering
-    //   return { ...je, entryNumber: idx }
-    // })
+  // deletes one single EntryLineItem
+  const deleteLineItems = (lineItemIds: number[]) => {
+    const newLineItems = entryLineItems
+      .filter(li => !lineItemIds.includes(li.id))
+    // TODO: fix the auto increment
+    setEntryLineItems(newLineItems)
+  }
 
-    // setJournalEntries(newJournalEntries)
+  // deletes every single EntryLineItem for a particular JournalEntry
+  const deleteJournalEntry = (entryNumber: JournalEntryNumber) => {
+    const journalEntry = journalEntries.find(je => je.entryNumber === entryNumber)
+    if (!journalEntry) { return }
+
+    const allEntryLineItems = [...journalEntry.debits, ...journalEntry.credits]
+    deleteLineItems(allEntryLineItems.map(eli => eli.id))
   }
 
   const createNewJournalEntry = () => {
-    // auo increments
-    // const entryNumber = journalEntries.length
-    // setJournalEntries([
-    //   ...journalEntries,
-    //   {
-    //     entryNumber,
-    //     debits: [{
-    //       id: Date.now() * Math.random(),
-    //       type: EntryType.debit,
-    //       amount: 0,
-    //       accountName: ''
-    //     }],
-    //     credits: [{
-    //       id: Date.now() * Math.random(),
-    //       type: EntryType.credit,
-    //       amount: 0,
-    //       accountName: ''
-    //     }]
-    //   }
-    // ])
+    // make sure new entries have the next ID in line
+    const entryNumber = Math.max(...journalEntries.map(je => je.entryNumber)) + 1
+
+    const newDebit = {
+      id: Date.now() * Math.random(),
+      entryNumber,
+      type: EntryType.debit,
+      amount: 0,
+      accountName: ''
+    }
+
+    const newCredit = {
+      id: Date.now() * Math.random(),
+      entryNumber,
+      type: EntryType.credit,
+      amount: 0,
+      accountName: ''
+    }
+
+    setEntryLineItems([...entryLineItems, newDebit, newCredit])
   }
 
   const ctxVal = {
