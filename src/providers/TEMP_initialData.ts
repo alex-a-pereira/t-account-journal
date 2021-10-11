@@ -1,5 +1,5 @@
 import {
-  EntryType, Debit, Credit, JournalEntry
+  EntryType, Debit, Credit, JournalEntry, EntryLineItem
 } from '@typings'
 
 const accountNames = [
@@ -63,8 +63,23 @@ const makeJournalEntry = (): JournalEntry => {
   return { entryNumber, debits, credits }
 }
 
+type EntryLineIdToEntryLineMap = { [entryLineItemId: number]: EntryLineItem }
+
+const makeJeAndSplitIntoLineItemMap = (): EntryLineIdToEntryLineMap => {
+  const je = makeJournalEntry()
+
+  const ret: EntryLineIdToEntryLineMap = {}
+
+  je.debits.forEach(dr => { ret[dr.id] = dr })
+  je.credits.forEach(cr => { ret[cr.id] = cr })
+
+  return ret
+}
+
 interface DataStore {
-  journalEntries: JournalEntry[]
+  journalEntries: JournalEntry[],
+  // TODO: migrate everything to use this
+  entryLineItemsMap: EntryLineIdToEntryLineMap
 }
 
 export const dataStore: DataStore = {
@@ -72,5 +87,11 @@ export const dataStore: DataStore = {
     makeJournalEntry(),
     makeJournalEntry(),
     makeJournalEntry()
-  ].sort((a, b) => a.entryNumber - b.entryNumber)
+  ].sort((a, b) => a.entryNumber - b.entryNumber),
+  entryLineItemsMap: {
+    ...makeJeAndSplitIntoLineItemMap(),
+    ...makeJeAndSplitIntoLineItemMap(),
+    ...makeJeAndSplitIntoLineItemMap(),
+    ...makeJeAndSplitIntoLineItemMap()
+  }
 }
