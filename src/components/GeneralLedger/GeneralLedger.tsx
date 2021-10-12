@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import { Table, Input } from 'semantic-ui-react'
+import { Table, Input, Icon } from 'semantic-ui-react'
 
 import {
   JournalEntry,
@@ -203,6 +203,7 @@ interface JournalEntryRowProps {
 
 export const JournalEntryRow: React.FC<JournalEntryRowProps> = (props: JournalEntryRowProps) => {
   const { journalEntry } = props
+  const { deleteJournalEntry } = useJournalDataContext()
 
   const allLineItems = [...journalEntry.debits, ...journalEntry.credits]
 
@@ -216,6 +217,17 @@ export const JournalEntryRow: React.FC<JournalEntryRowProps> = (props: JournalEn
                   idx === 0 && (
                     <Table.Cell rowSpan={allLineItems.length}>
                       {journalEntry.entryNumber}
+                      <div
+                        className='delete-icon-container'
+                        onClick={() => {
+                          deleteJournalEntry(journalEntry.entryNumber)
+                        }}
+                      >
+                        <Icon
+                          name='trash alternate'
+                          color='red'
+                        />
+                      </div>
                     </Table.Cell>
                   )
                 }

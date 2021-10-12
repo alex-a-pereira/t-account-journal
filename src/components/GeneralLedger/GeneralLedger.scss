@@ -8,3 +8,9 @@
     }
   }
 }
+
+div.delete-icon-container {
+  &:hover {
+    cursor: pointer;
+  }
+}
