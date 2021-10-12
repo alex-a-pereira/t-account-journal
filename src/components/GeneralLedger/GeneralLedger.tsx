@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react'
+import { Table } from 'semantic-ui-react'
 
 import {
   JournalEntry,
@@ -132,11 +133,77 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props: JournalE
   )
 }
 
+interface EntryLineItemRowProps {
+  entryLineItem: EntryLineItem
+}
+
+const EntryLineItemRow: React.FC<EntryLineItemRowProps> = (props: EntryLineItemRowProps) => {
+  const { entryLineItem } = props
+  return (
+    <>
+      <Table.Cell>{entryLineItem.type === EntryType.debit && entryLineItem.accountName}</Table.Cell>
+      <Table.Cell>{entryLineItem.type === EntryType.credit && entryLineItem.accountName}</Table.Cell>
+      <Table.Cell>{entryLineItem.type === EntryType.debit && entryLineItem.amount}</Table.Cell>
+      <Table.Cell>{entryLineItem.type === EntryType.credit && entryLineItem.amount}</Table.Cell>
+    </>
+  )
+}
+
+interface JournalEntryRowProps {
+  journalEntry: JournalEntry
+}
+
+export const JournalEntryRow: React.FC<JournalEntryRowProps> = (props: JournalEntryRowProps) => {
+  const { journalEntry } = props
+
+  const allLineItems = [...journalEntry.debits, ...journalEntry.credits]
+
+  return (
+    <>
+      {
+          allLineItems.map((lineItem, idx) => {
+            return (
+              <Table.Row key={idx}>
+                {
+                  idx === 0 && (
+                    <Table.Cell rowSpan={allLineItems.length}>
+                      {journalEntry.entryNumber}
+                    </Table.Cell>
+                  )
+                }
+                <EntryLineItemRow entryLineItem={lineItem} />
+              </Table.Row>
+            )
+          })
+        }
+
+    </>
+  )
+}
+
 export const GeneralLedger: React.FC = () => {
   const { journalEntries, createNewJournalEntry } = useJournalDataContext()
 
   return (
     <div>
+      <Table celled structured compact>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>{null}</Table.HeaderCell>
+            <Table.HeaderCell>Debit</Table.HeaderCell>
+            <Table.HeaderCell>Credit</Table.HeaderCell>
+            <Table.HeaderCell>Debit</Table.HeaderCell>
+            <Table.HeaderCell>Credit</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
+          {journalEntries.map((journalEntry, idx) => {
+            return <JournalEntryRow journalEntry={journalEntry} key={idx} />
+          })
+        }
+        </Table.Body>
+      </Table>
       <table className='gen-ledger-table'>
         <tbody>
           {journalEntries.map((entry, idx) => {
