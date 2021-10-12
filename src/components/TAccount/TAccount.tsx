@@ -10,23 +10,6 @@ import {
 
 import './TAccount.scss'
 
-interface TAccountEntryProps {
-  isEven: boolean
-  entryLineItem: EntryLineItemWithEntryNumber
-}
-
-const TAccountEntry: React.FC<TAccountEntryProps> = (props: TAccountEntryProps) => {
-  const { type, amount, entryNumber } = props.entryLineItem
-
-  return (
-    <tr className={`entry ${!props.isEven ? 'dark' : ''}`}>
-      <td className='id'>{entryNumber}</td>
-      <td className='column'>{type === EntryType.debit ? amount : null}</td>
-      <td className='column'>{type === EntryType.credit ? amount : null}</td>
-    </tr>
-  )
-}
-
 interface TAccountEntryRowProps {
   entryLineItem: EntryLineItem
 }
@@ -69,7 +52,7 @@ export const TAccount: React.FC<TAccountProps> = (props: TAccountProps) => {
       </div>
 
       <Table compact striped celled>
-        {/*  */}
+        {/* HEADER */}
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell colSpan='3'>{accountName}</Table.HeaderCell>
@@ -106,29 +89,6 @@ export const TAccount: React.FC<TAccountProps> = (props: TAccountProps) => {
           </Table.Row>
         </Table.Footer>
       </Table>
-
-      <div className='body'>
-        <table>
-          <tbody>
-            {
-            lineItems.map((li, idx) => {
-              return (
-                <TAccountEntry
-                  key={idx}
-                  isEven={idx % 2 === 0}
-                  entryLineItem={li}
-                />
-              )
-            })
-          }
-            <tr className='t-account-total'>
-              <td className='ending-bal-text'>bal</td>
-              <td className='column'>{endingBalanceRounded >= 0 ? endingBalanceRounded : null}</td>
-              <td className='column'>{endingBalanceRounded < 0 ? endingBalanceRounded * -1 : null}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
   )
 }
