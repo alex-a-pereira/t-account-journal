@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import { Table } from 'semantic-ui-react'
+import { Table, Input } from 'semantic-ui-react'
 
 import {
   JournalEntry,
@@ -139,22 +139,59 @@ interface EntryLineItemRowProps {
 
 const EntryLineItemRow: React.FC<EntryLineItemRowProps> = (props: EntryLineItemRowProps) => {
   const { entryLineItem } = props
+  const { updateEntryLineItem } = useJournalDataContext()
 
   const isDebit = entryLineItem.type === EntryType.debit
 
   return (
     <>
       <Table.Cell>
-        {isDebit && entryLineItem.accountName}
+        {isDebit && (
+          <Input
+            fluid
+            size='small'
+            defaultValue={entryLineItem.accountName}
+            onChange={event => {
+              updateEntryLineItem(entryLineItem.id, { accountName: event.target.value })
+            }}
+          />
+        )}
       </Table.Cell>
       <Table.Cell>
-        {!isDebit && entryLineItem.accountName}
+        {!isDebit && (
+          <Input
+            fluid
+            size='small'
+            defaultValue={entryLineItem.accountName}
+            onChange={event => {
+              updateEntryLineItem(entryLineItem.id, { accountName: event.target.value })
+            }}
+          />
+        )}
       </Table.Cell>
       <Table.Cell>
-        {isDebit && entryLineItem.amount}
+        {isDebit && (
+          <Input
+            fluid
+            size='small'
+            defaultValue={entryLineItem.amount}
+            onChange={event => {
+              updateEntryLineItem(entryLineItem.id, { amount: event.target.value })
+            }}
+          />
+        )}
       </Table.Cell>
       <Table.Cell>
-        {!isDebit && entryLineItem.amount}
+        {!isDebit && (
+          <Input
+            fluid
+            size='small'
+            defaultValue={entryLineItem.amount}
+            onChange={event => {
+              updateEntryLineItem(entryLineItem.id, { amount: event.target.value })
+            }}
+          />
+        )}
       </Table.Cell>
     </>
   )
