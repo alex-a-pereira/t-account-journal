@@ -125,7 +125,7 @@ export const GeneralLedger: React.FC = () => {
       <Table celled structured compact>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>{null}</Table.HeaderCell>
+            <Table.HeaderCell width={1}>#</Table.HeaderCell>
             <Table.HeaderCell>Debit</Table.HeaderCell>
             <Table.HeaderCell>Credit</Table.HeaderCell>
             <Table.HeaderCell>Debit</Table.HeaderCell>
