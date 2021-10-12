@@ -15,12 +15,23 @@ interface EntryLineItemRowProps {
 
 const EntryLineItemRow: React.FC<EntryLineItemRowProps> = (props: EntryLineItemRowProps) => {
   const { entryLineItem } = props
-  const { updateEntryLineItem } = useJournalDataContext()
+  const { updateEntryLineItem, deleteLineItem } = useJournalDataContext()
 
   const isDebit = entryLineItem.type === EntryType.debit
 
   return (
     <>
+      <Table.Cell>
+        <div
+          className='delete-icon-container'
+          onClick={() => { deleteLineItem(entryLineItem.id) }}
+        >
+          <Icon
+            name='trash alternate'
+            color='orange'
+          />
+        </div>
+      </Table.Cell>
       <Table.Cell>
         {isDebit && (
           <Input
@@ -126,6 +137,7 @@ export const GeneralLedger: React.FC = () => {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell width={1}>#</Table.HeaderCell>
+            <Table.HeaderCell width={1}></Table.HeaderCell>
             <Table.HeaderCell>Debit</Table.HeaderCell>
             <Table.HeaderCell>Credit</Table.HeaderCell>
             <Table.HeaderCell>Debit</Table.HeaderCell>
