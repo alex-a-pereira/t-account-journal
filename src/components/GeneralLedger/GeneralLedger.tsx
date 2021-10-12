@@ -91,7 +91,7 @@ export const JournalEntryRow: React.FC<JournalEntryRowProps> = (props: JournalEn
               <Table.Row key={idx}>
                 {
                   idx === 0 && (
-                    <Table.Cell rowSpan={allLineItems.length}>
+                    <Table.Cell rowSpan={allLineItems.length} width={1}>
                       {journalEntry.entryNumber}
                       <div
                         className='delete-icon-container'
