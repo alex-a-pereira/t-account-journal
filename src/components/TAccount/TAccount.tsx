@@ -46,16 +46,14 @@ export const TAccount: React.FC<TAccountProps> = (props: TAccountProps) => {
   const endingBalIsDebit = endingBalanceRounded >= 0
 
   return (
-    <div className="t-account-container">
-      <div className="header">
-        <h3 className="title">{accountName}</h3>
-      </div>
-
+    <div className="t-account">
       <Table compact striped celled>
         {/* HEADER */}
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell colSpan='3'>{accountName}</Table.HeaderCell>
+            <Table.HeaderCell colSpan='3' textAlign='center' className='acct-name-cell'>
+              {accountName}
+            </Table.HeaderCell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell width={1}>#</Table.HeaderCell>

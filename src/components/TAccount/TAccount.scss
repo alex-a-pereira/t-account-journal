@@ -1,63 +1,10 @@
-.t-account-container {
-  border: 1px solid $border-color;
-  border-radius: 24px;
+.t-account {
   width: 30%;
-  min-width: 240px;
-  margin: 12px;
-  overflow: hidden;
+  padding: 12px;
+}
 
-  .header {
-    padding: 12px 12px;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-  }
-
-  .body {
-    padding: 12px;
-
-
-    table {
-      width: 100%;
-      border: 1px solid $border-color;
-
-      .entry {
-        width: 100%;
-
-        &.dark {
-          background-color: $kinda-light-gray;
-        }
-
-        td {
-          &.column {
-            width: 42.5%;
-          }
-
-          &.id {
-            width: 15%;
-          }
-          
-        }
-      }
-    }
-
-    .ending-balance-divider {
-      width: 100%;
-      margin-top: 12px;
-      margin-bottom: 12px;
-    }
-
-    .t-account-total {
-      background-color: $light-teal;
-
-      .ending-bal-text {
-        font-weight: normal;
-        font-size: smaller;
-      }
-
-      font-weight: bold;
-    }
-  }
+.acct-name-cell {
+  background-color: white !important;
 }
 
 .ending-bal-row {
