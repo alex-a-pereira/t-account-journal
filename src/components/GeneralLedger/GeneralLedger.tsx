@@ -139,12 +139,23 @@ interface EntryLineItemRowProps {
 
 const EntryLineItemRow: React.FC<EntryLineItemRowProps> = (props: EntryLineItemRowProps) => {
   const { entryLineItem } = props
+
+  const isDebit = entryLineItem.type === EntryType.debit
+
   return (
     <>
-      <Table.Cell>{entryLineItem.type === EntryType.debit && entryLineItem.accountName}</Table.Cell>
-      <Table.Cell>{entryLineItem.type === EntryType.credit && entryLineItem.accountName}</Table.Cell>
-      <Table.Cell>{entryLineItem.type === EntryType.debit && entryLineItem.amount}</Table.Cell>
-      <Table.Cell>{entryLineItem.type === EntryType.credit && entryLineItem.amount}</Table.Cell>
+      <Table.Cell>
+        {isDebit && entryLineItem.accountName}
+      </Table.Cell>
+      <Table.Cell>
+        {!isDebit && entryLineItem.accountName}
+      </Table.Cell>
+      <Table.Cell>
+        {isDebit && entryLineItem.amount}
+      </Table.Cell>
+      <Table.Cell>
+        {!isDebit && entryLineItem.amount}
+      </Table.Cell>
     </>
   )
 }
