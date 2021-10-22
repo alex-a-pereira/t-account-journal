@@ -22,6 +22,54 @@ const EntryLineItemRow: React.FC<EntryLineItemRowProps> = (props: EntryLineItemR
   return (
     <>
       <Table.Cell>
+        {isDebit && (
+          <Input
+            fluid
+            size='small'
+            defaultValue={entryLineItem.accountName}
+            onChange={event => {
+              updateEntryLineItem(entryLineItem.id, { accountName: event.target.value })
+            }}
+          />
+        )}
+      </Table.Cell>
+      <Table.Cell>
+        {!isDebit && (
+          <Input
+            fluid
+            size='small'
+            defaultValue={entryLineItem.accountName}
+            onChange={event => {
+              updateEntryLineItem(entryLineItem.id, { accountName: event.target.value })
+            }}
+          />
+        )}
+      </Table.Cell>
+      <Table.Cell>
+        {isDebit && (
+          <Input
+            fluid
+            size='small'
+            defaultValue={entryLineItem.amount}
+            onChange={event => {
+              updateEntryLineItem(entryLineItem.id, { amount: event.target.value })
+            }}
+          />
+        )}
+      </Table.Cell>
+      <Table.Cell>
+        {!isDebit && (
+          <Input
+            fluid
+            size='small'
+            defaultValue={entryLineItem.amount}
+            onChange={event => {
+              updateEntryLineItem(entryLineItem.id, { amount: event.target.value })
+            }}
+          />
+        )}
+      </Table.Cell>
+      <Table.Cell>
         <div
           className='delete-icon-container'
           onClick={() => { deleteLineItem(entryLineItem.id) }}
@@ -31,54 +79,6 @@ const EntryLineItemRow: React.FC<EntryLineItemRowProps> = (props: EntryLineItemR
             color='orange'
           />
         </div>
-      </Table.Cell>
-      <Table.Cell>
-        {isDebit && (
-          <Input
-            fluid
-            size='small'
-            defaultValue={entryLineItem.accountName}
-            onChange={event => {
-              updateEntryLineItem(entryLineItem.id, { accountName: event.target.value })
-            }}
-          />
-        )}
-      </Table.Cell>
-      <Table.Cell>
-        {!isDebit && (
-          <Input
-            fluid
-            size='small'
-            defaultValue={entryLineItem.accountName}
-            onChange={event => {
-              updateEntryLineItem(entryLineItem.id, { accountName: event.target.value })
-            }}
-          />
-        )}
-      </Table.Cell>
-      <Table.Cell>
-        {isDebit && (
-          <Input
-            fluid
-            size='small'
-            defaultValue={entryLineItem.amount}
-            onChange={event => {
-              updateEntryLineItem(entryLineItem.id, { amount: event.target.value })
-            }}
-          />
-        )}
-      </Table.Cell>
-      <Table.Cell>
-        {!isDebit && (
-          <Input
-            fluid
-            size='small'
-            defaultValue={entryLineItem.amount}
-            onChange={event => {
-              updateEntryLineItem(entryLineItem.id, { amount: event.target.value })
-            }}
-          />
-        )}
       </Table.Cell>
     </>
   )
@@ -137,11 +137,11 @@ export const GeneralLedger: React.FC = () => {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell width={1}>#</Table.HeaderCell>
+            <Table.HeaderCell>Debit</Table.HeaderCell>
+            <Table.HeaderCell>Credit</Table.HeaderCell>
+            <Table.HeaderCell>Debit</Table.HeaderCell>
+            <Table.HeaderCell>Credit</Table.HeaderCell>
             <Table.HeaderCell width={1}></Table.HeaderCell>
-            <Table.HeaderCell>Debit</Table.HeaderCell>
-            <Table.HeaderCell>Credit</Table.HeaderCell>
-            <Table.HeaderCell>Debit</Table.HeaderCell>
-            <Table.HeaderCell>Credit</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
