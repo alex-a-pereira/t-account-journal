@@ -15,14 +15,16 @@ interface JournalData {
   journalEntries: JournalEntry[]
   createNewJournalEntry: Function,
   deleteJournalEntry: Function,
-  updateEntryLineItem: Function
+  updateEntryLineItem: Function,
+  deleteLineItem: Function
 }
 
 const JournalDataContext = React.createContext<JournalData>({
   journalEntries: dataStore.journalEntries,
   createNewJournalEntry: () => {},
   deleteJournalEntry: () => {},
-  updateEntryLineItem: () => {}
+  updateEntryLineItem: () => {},
+  deleteLineItem: () => {}
 })
 
 const lineItemsToJournalEntryArr = (entryLineItems: EntryLineItem[]): JournalEntry[] => {
@@ -116,6 +118,10 @@ export const JournalDataProvider: React.FC = ({ children }) => {
     setEntryLineItems(newLineItems)
   }
 
+  const deleteLineItem = (lineItemId: number) => {
+    deleteLineItems([lineItemId])
+  }
+
   // deletes every single EntryLineItem for a particular JournalEntry
   const deleteJournalEntry = (entryNumber: JournalEntryNumber) => {
     const journalEntry = journalEntries.find(je => je.entryNumber === entryNumber)
@@ -129,7 +135,8 @@ export const JournalDataProvider: React.FC = ({ children }) => {
     journalEntries,
     createNewJournalEntry,
     deleteJournalEntry,
-    updateEntryLineItem
+    updateEntryLineItem,
+    deleteLineItem
   }
 
   return (
